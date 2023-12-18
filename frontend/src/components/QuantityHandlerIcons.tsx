@@ -1,12 +1,18 @@
 import React, { useState } from "react";
-
 import { IoMdAdd, IoMdRemove } from "react-icons/io";
 import { FaRegTrashAlt } from "react-icons/fa";
 
 import { useCart } from "../context/CartContext";
 import VerticalModal from "./VerticalModal";
+import Dish from "../types/Dish";
 
-const QuantityHandlerIcons = ({ item }) => {
+type QuantityHandlerIconsProps = {
+  item: Dish;
+};
+
+const QuantityHandlerIcons: React.FC<QuantityHandlerIconsProps> = ({
+  item,
+}) => {
   const { removeFromCart, incrementQuantity, decrementQuantity } = useCart();
   const [modalShow, setModalShow] = useState(false);
 
@@ -17,7 +23,7 @@ const QuantityHandlerIcons = ({ item }) => {
   };
 
   const decrementCount = () => {
-    if (quantity > 1) {
+    if (quantity && quantity > 1) {
       decrementQuantity(item);
     } else {
       setModalShow(true);

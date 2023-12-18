@@ -1,3 +1,4 @@
+import React from "react";
 import { Container } from "react-bootstrap";
 import { Routes, Route } from "react-router-dom";
 
@@ -8,7 +9,7 @@ import NavBar from "./components/NavBar";
 
 import { CartProvider } from "./context/CartContext";
 
-function App() {
+const App: React.FC = () => {
   return (
     <>
       <NavBar />

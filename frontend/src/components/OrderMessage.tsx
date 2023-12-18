@@ -1,6 +1,10 @@
 import React from "react";
 
-const OrderMessage = ({ message }) => {
+type OrderMessageProps = {
+  message: string;
+}
+
+const OrderMessage: React.FC<OrderMessageProps> = ({ message }) => {
   const messageColor = message.includes("Successful")
     ? "green"
     : "red";

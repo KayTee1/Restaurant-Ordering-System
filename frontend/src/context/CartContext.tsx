@@ -1,8 +1,31 @@
-import { createContext, useReducer, useContext } from "react";
+import React, { createContext, useReducer, useContext, ReactNode } from "react";
 
-const CartContext = createContext();
+type Item = {
+  id: string;
+  quantity?: number;
+};
 
-const cartReducer = (state, action) => {
+type CartState = {
+  items: Item[];
+};
+
+type CartAction =
+  | { type: "ADD_TO_CART"; payload: Item }
+  | { type: "REMOVE_FROM_CART"; payload: Item }
+  | { type: "INCREMENT_QUANTITY"; payload: Item }
+  | { type: "DECREMENT_QUANTITY"; payload: Item };
+
+type CartContextType = {
+  cartState: CartState;
+  addToCart: (item: Item) => void;
+  removeFromCart: (item: Item) => void;
+  incrementQuantity: (item: Item) => void;
+  decrementQuantity: (item: Item) => void;
+};
+
+const CartContext = createContext<CartContextType | undefined>(undefined);
+
+const cartReducer = (state: CartState, action: CartAction): CartState => {
   switch (action.type) {
     case "ADD_TO_CART":
       const existingItemIndex = state.items.findIndex(
@@ -11,7 +34,7 @@ const cartReducer = (state, action) => {
 
       if (existingItemIndex !== -1) {
         const updatedItems = state.items.map((item, index) =>
-          index === existingItemIndex
+          index === existingItemIndex && item.quantity !== undefined
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
@@ -33,17 +56,21 @@ const cartReducer = (state, action) => {
     case "INCREMENT_QUANTITY":
       const incrementedItems = state.items.map((item) =>
         item.id === action.payload.id
-          ? { ...item, quantity: item.quantity + 1 }
+          ? { ...item, quantity: item.quantity! + 1 }
           : item
       );
+
       return { ...state, items: incrementedItems };
 
     case "DECREMENT_QUANTITY":
       const decrementedItems = state.items.map((item) =>
-        item.id === action.payload.id && item.quantity > 1
+        item.id === action.payload.id &&
+        item.quantity !== undefined &&
+        item.quantity > 1
           ? { ...item, quantity: item.quantity - 1 }
           : item
       );
+
       return { ...state, items: decrementedItems };
 
     default:
@@ -51,22 +78,26 @@ const cartReducer = (state, action) => {
   }
 };
 
-const CartProvider = ({ children }) => {
+type CartProviderProps = {
+  children: ReactNode;
+};
+
+const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [cartState, dispatch] = useReducer(cartReducer, { items: [] });
 
-  const addToCart = (item) => {
+  const addToCart = (item: Item) => {
     dispatch({ type: "ADD_TO_CART", payload: item });
   };
 
-  const removeFromCart = (item) => {
+  const removeFromCart = (item: Item) => {
     dispatch({ type: "REMOVE_FROM_CART", payload: item });
   };
 
-  const incrementQuantity = (item) => {
+  const incrementQuantity = (item: Item) => {
     dispatch({ type: "INCREMENT_QUANTITY", payload: item });
   };
 
-  const decrementQuantity = (item) => {
+  const decrementQuantity = (item: Item) => {
     dispatch({ type: "DECREMENT_QUANTITY", payload: item });
   };
 
@@ -85,10 +116,10 @@ const CartProvider = ({ children }) => {
   );
 };
 
-const useCart = () => {
+const useCart = (): CartContextType => {
   const context = useContext(CartContext);
   if (!context) {
-    throw new Error("Error");
+    throw new Error("useCart must be used within a CartProvider");
   }
   return context;
 };

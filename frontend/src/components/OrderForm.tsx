@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 import { Button, Form, Row, Col, Card } from "react-bootstrap";
 
@@ -6,10 +6,24 @@ import { useCart } from "../context/CartContext";
 import OrderMessage from "./OrderMessage";
 import CartItemCard from "./CartItemCard";
 
-const OrderForm = ({ resetFireworks, setFireworksOpacity }) => {
+import Dish from "../types/Dish";
+
+type FormData = {
+  name: string;
+  email: string;
+  street: string;
+  postalCode: string;
+  city: string;
+  isVerified: boolean;
+};
+
+const OrderForm: React.FC<{
+  resetFireworks: () => void;
+  setFireworksOpacity: (opacity: number) => void;
+}> = ({ resetFireworks, setFireworksOpacity }) => {
   const { cartState } = useCart();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     street: "",
@@ -18,24 +32,18 @@ const OrderForm = ({ resetFireworks, setFireworksOpacity }) => {
     isVerified: false,
   });
 
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState<string>("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    if (cartState.items.length == 0) {
+    if (cartState.items.length === 0) {
       setMessage("Your Cart is Empty!");
       return;
     }
 
     const { name, email, street, postalCode, city } = formData;
-    if (
-      name == "" ||
-      email == "" ||
-      street == "" ||
-      postalCode == "" ||
-      city == ""
-    ) {
+    if (!name || !email || !street || !postalCode || !city) {
       setMessage("Missing details!");
       return;
     }
@@ -48,7 +56,7 @@ const OrderForm = ({ resetFireworks, setFireworksOpacity }) => {
     sendOrder(formData);
   };
 
-  const sendOrder = useCallback(async (formData) => {
+  const sendOrder = useCallback(async (formData: FormData) => {
     try {
       const items = cartState.items;
       const orderData = {
@@ -70,15 +78,18 @@ const OrderForm = ({ resetFireworks, setFireworksOpacity }) => {
       console.error(err);
       setMessage("Something went wrong!");
     }
-  }, []);
+  }, [cartState.items, resetFireworks, setFireworksOpacity]);
 
-  const handleChange = (e) => {
-    const { id, value, type, checked } = e.target;
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { id, value, type } = e.target;
+    const isChecked = type === "checkbox" ? (e.target as HTMLInputElement).checked : undefined;
+  
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [id]: type === "checkbox" ? checked : value,
+      [id]: type === "checkbox" ? isChecked : value,
     }));
   };
+  
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -151,7 +162,7 @@ const OrderForm = ({ resetFireworks, setFireworksOpacity }) => {
                 {cartState.items.length > 0 ? (
                   <>
                     {cartState.items.map((item, index) => (
-                      <CartItemCard key={index} item={item} short={true} />
+                      <CartItemCard key={index} item={item as Dish} short={true} />
                     ))}
                   </>
                 ) : (

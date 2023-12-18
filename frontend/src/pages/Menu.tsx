@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import axios from "axios";
 
 import { Container, Row, Col } from "react-bootstrap";
@@ -7,15 +7,15 @@ import MenuItemCard from "../components/MenuItemCard";
 
 import Dish from "../types/Dish";
 
-const Menu:React.FC = () => {
+const Menu: React.FC = () => {
   const [dishes, setDishes] = useState<Dish[]>([]);
-  const [isLoading, setIsLoading] = useState<Boolean>(true);
-  const [isError, setIsError] = useState<Boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isError, setIsError] = useState<boolean>(false);
 
   const fetchDishes = useCallback(async () => {
     try {
       const dishesUrl = "http://localhost:5000/api/dishes";
-      const response = await axios.get(dishesUrl);
+      const response = await axios.get<Dish[]>(dishesUrl);
       const data = response.data;
 
       setDishes(data);

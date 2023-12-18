@@ -1,10 +1,13 @@
-type Dish = {
+type Item = {
   id: string;
+  quantity?: number;
+};
+
+type Dish = Item & {
   name: string;
   price: string;
   description: string;
   image: string;
-  quantity?: number
 };
 
 export default Dish;

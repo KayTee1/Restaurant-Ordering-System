@@ -6,19 +6,23 @@ import { formatCurrency } from "../utilities/formatCurrency";
 
 import { useCart } from "../context/CartContext";
 
-import Dish from '../types/Dish'
+import Dish from "../types/Dish";
 
-const MenuItemCard = ({ dish }) => {
+type MenuItemCardProps = {
+  dish: Dish;
+};
+
+const MenuItemCard: React.FC<MenuItemCardProps> = ({ dish }) => {
   const { addToCart } = useCart();
   const { name, price, description, image } = dish;
 
-  const [img, setImg] = useState();
+  const [img, setImg] = useState<string | undefined>();
 
   const handleAddToCart = () => {
     dish.quantity = 1;
     addToCart(dish);
   };
-  //https://react-diner-backend.onrender.com/
+
   const fetchImage = useCallback(async () => {
     try {
       const baseUrl = "http://localhost:5000/";
@@ -34,7 +38,7 @@ const MenuItemCard = ({ dish }) => {
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  }, [image]);
 
   useEffect(() => {
     fetchImage();
@@ -51,7 +55,9 @@ const MenuItemCard = ({ dish }) => {
       <Card.Body className="d-flex flex-column">
         <Card.Title className="d-flex justify-content-between align-items-baseline mb-4">
           <span className="fs-2">{name}</span>
-          <span className="ms-2 text-muted">{formatCurrency(price)}</span>
+          <span className="ms-2 text-muted">
+            {formatCurrency(parseFloat(price))}
+          </span>
         </Card.Title>
         <Card.Text className="m-auto">
           <span>{description}</span>

@@ -1,0 +1,53 @@
+# This is a workflow is for testing and building Frontend changes
+name: CI/CD Pipeline
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: ["main"]
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+
+  test:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    name: Frontend Tests
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Fetch code
+        uses: actions/checkout@v3
+
+      # Install node LTS version
+      - name: Install node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # Install the dependencies for the frontend
+      - name: Install the dependecies
+        run:  cd frontend; npm install
+
+      # Test the code
+      - name: Testing the application
+        run:  cd frontend; npm run test:ci
+
+  build-frontend:
+    runs-on: ubuntu-latest
+    name: Build Application
+    steps:
+      - name: Fetch code
+        uses: actions/checkout@v3
+      - name: Install node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install the dependecies
+        run: cd frontend; npm install
+      - name: Make Production Build
+        run: cd frontend; npm run build
+      - name: Archive Production Build Files
+        uses: actions/upload-artifact@v3
+        with:
+          name: production_dist
+          path: dist/

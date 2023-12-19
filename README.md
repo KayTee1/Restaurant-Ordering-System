@@ -25,3 +25,15 @@ The backend of the restaurant ordering system is built with Node.js and Express.
   - GET endpoint (`/api/orders`) to retrieve a list of orders.
   - POST endpoint (`/api/orders`) to create a new order.
   - DELETE endpoint (`/api/orders`) to delete all orders.
+
+# Demo
+
+[Restaurant Ordering App](https://restaurant-ordering-app-uvyl.onrender.com/)
+
+# Screenshots
+
+![Menu](images/Menu.png)
+
+![Cart](images/Cart.png)
+
+![Checkout](images/Checkout.png)

@@ -16,7 +16,6 @@ type MenuItemCardProps = {
 const MenuItemCard: React.FC<MenuItemCardProps> = ({ dish }) => {
   const { addToCart } = useCart();
   const { name, price, description, image } = dish;
-
   const [img, setImg] = useState<string | undefined>();
 
   const handleAddToCart = () => {

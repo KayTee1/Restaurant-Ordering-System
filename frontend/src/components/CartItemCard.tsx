@@ -15,8 +15,7 @@ const CartItemCard: React.FC<CartItemCardProps> = ({
   item,
   short,
 }: CartItemCardProps) => {
-  const { name, price, description, quantity } = item;
-
+  const { name, price, description, quantity = 1 } = item;
 
   return (
     <Card className="h-100 m-2">
@@ -32,11 +31,7 @@ const CartItemCard: React.FC<CartItemCardProps> = ({
               </Col>
               <Col style={{ textAlign: "right" }} className="me-4">
                 <span className="text-muted">
-                  {formatCurrency(
-                    typeof price === "number" && typeof quantity === "number"
-                      ? price * quantity
-                      : 0
-                  )}
+                  {formatCurrency(parseFloat(price) * quantity)}
                 </span>
               </Col>
             </Row>
@@ -46,11 +41,7 @@ const CartItemCard: React.FC<CartItemCardProps> = ({
             <Card.Title className="d-flex justify-content-between align-items-baseline mb-4">
               <span className="fs-2">{name}</span>
               <span className="ms-2 text-muted">
-                {formatCurrency(
-                  typeof price === "number" && typeof quantity === "number"
-                    ? price * quantity
-                    : 0
-                )}
+                {formatCurrency(parseFloat(price) * quantity)}
               </span>
             </Card.Title>
             <span>{description}</span>

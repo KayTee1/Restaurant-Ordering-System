@@ -32,8 +32,11 @@ The backend of the restaurant ordering system is built with Node.js and Express.
 
 # Screenshots
 
+# Menu
 ![Menu](images/Menu.png)
 
+# Cart
 ![Cart](images/Cart.png)
 
+# Checkout
 ![Checkout](images/Checkout.png)

@@ -28,7 +28,25 @@ The backend of the restaurant ordering system is built with Node.js and Express.
 
 # Demo
 
-[Restaurant Ordering App](https://restaurant-ordering-app-uvyl.onrender.com/)
+To try out the app, follow these steps:
+
+1. Backend
+
+The backend service deployed on *Render* may experience a brief delay when initially accessed due to automatic spinning down during idle periods. Follow these steps to access the backend:
+
+Visit the backend service by clicking on [Backend Service Link](https://ordering-system-backend.onrender.com/api/dishes).
+
+Please allow a few seconds for the service to spin up. You may experience a momentary delay, and the first request may take a bit longer.
+
+2. Frontend
+
+Once the backend is up and running, you can access the frontend to interact with the app. Follow these steps:
+
+Visit the frontend app by clicking on [Frontend App Link](https://restaurant-ordering-app-uvyl.onrender.com/).
+Enjoy testing the app!
+
+Note: If you encounter any issues or experience delays, please refresh the page. The backend may take a moment to spin up if it's been idle.
+
 
 # Screenshots
 

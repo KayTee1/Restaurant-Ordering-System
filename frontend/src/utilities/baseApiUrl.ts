@@ -1,0 +1,1 @@
+export const baseApiUrl = "https://ordering-system-backend.onrender.com/"

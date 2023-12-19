@@ -7,6 +7,7 @@ import OrderMessage from "./OrderMessage";
 import CartItemCard from "./CartItemCard";
 
 import Dish from "../types/Dish";
+import { baseApiUrl } from "../utilities/baseApiUrl";
 
 type FormData = {
   name: string;
@@ -56,40 +57,45 @@ const OrderForm: React.FC<{
     sendOrder(formData);
   };
 
-  const sendOrder = useCallback(async (formData: FormData) => {
-    try {
-      const items = cartState.items;
-      const orderData = {
-        order: {
-          customer: formData,
-          items,
-        },
-      };
+  const sendOrder = useCallback(
+    async (formData: FormData) => {
+      try {
+        const items = cartState.items;
+        const orderData = {
+          order: {
+            customer: formData,
+            items,
+          },
+        };
 
-      const orderUrl = "http://localhost:5000/api/orders";
-      const res = await axios.post(orderUrl, orderData);
-      console.log(res);
+        const orderUrl = "api/orders";
+        const res = await axios.post(baseApiUrl + orderUrl, orderData);
+        console.log(res);
 
-      setMessage("Order Successful!");
+        setMessage("Order Successful!");
 
-      setFireworksOpacity(1);
-      resetFireworks();
-    } catch (err) {
-      console.error(err);
-      setMessage("Something went wrong!");
-    }
-  }, [cartState.items, resetFireworks, setFireworksOpacity]);
+        setFireworksOpacity(1);
+        resetFireworks();
+      } catch (err) {
+        console.error(err);
+        setMessage("Something went wrong!");
+      }
+    },
+    [cartState.items, resetFireworks, setFireworksOpacity]
+  );
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { id, value, type } = e.target;
-    const isChecked = type === "checkbox" ? (e.target as HTMLInputElement).checked : undefined;
-  
+    const isChecked =
+      type === "checkbox" ? (e.target as HTMLInputElement).checked : undefined;
+
     setFormData((prevFormData) => ({
       ...prevFormData,
       [id]: type === "checkbox" ? isChecked : value,
     }));
   };
-  
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -162,7 +168,11 @@ const OrderForm: React.FC<{
                 {cartState.items.length > 0 ? (
                   <>
                     {cartState.items.map((item, index) => (
-                      <CartItemCard key={index} item={item as Dish} short={true} />
+                      <CartItemCard
+                        key={index}
+                        item={item as Dish}
+                        short={true}
+                      />
                     ))}
                   </>
                 ) : (

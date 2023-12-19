@@ -1,17 +1,18 @@
 import { Button, Container, Nav, Navbar as NavbarBs } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 
-import axios from 'axios';
+import axios from "axios";
+import { baseApiUrl } from "../utilities/baseApiUrl";
 
 const handleResetOrders = async () => {
   try {
-    const resetUrl = "http://localhost:5000/api/orders";
-    const res = await axios.delete(resetUrl);
+    const resetApiUrl = "api/orders";
+    const res = await axios.delete(baseApiUrl + resetApiUrl);
     console.log(res);
   } catch (err) {
     console.error(err);
   }
-}
+};
 
 const NavBar = () => {
   return (

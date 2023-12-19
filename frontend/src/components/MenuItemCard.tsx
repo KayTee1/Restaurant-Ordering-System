@@ -7,6 +7,7 @@ import { formatCurrency } from "../utilities/formatCurrency";
 import { useCart } from "../context/CartContext";
 
 import Dish from "../types/Dish";
+import { baseApiUrl } from "../utilities/baseApiUrl";
 
 type MenuItemCardProps = {
   dish: Dish;
@@ -25,8 +26,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({ dish }) => {
 
   const fetchImage = useCallback(async () => {
     try {
-      const baseUrl = "http://localhost:5000/";
-      const response = await axios.get(baseUrl + image, {
+      const response = await axios.get(baseApiUrl + image, {
         responseType: "arraybuffer",
       });
 

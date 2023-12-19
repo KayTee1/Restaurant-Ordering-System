@@ -1,13 +1,15 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 
 import { Fireworks } from "@fireworks-js/react";
+import type { FireworksHandlers } from '@fireworks-js/react'
+
 import { Container } from "react-bootstrap";
 
 import OrderForm from "../components/OrderForm";
 
 const Checkout = () => {
   const [fireworksOpacity, setFireworksOpacity] = useState(0);
-  const ref = useRef(null);
+  const ref = useRef<FireworksHandlers>(null)
 
   const resetFireworks = () => {
     if (!ref.current) return;
@@ -36,7 +38,6 @@ const Checkout = () => {
             height: "100%",
             position: "fixed",
             background: "#000",
-            traceSpeed: 2,
             backgroundColor: "white",
           }}
         />

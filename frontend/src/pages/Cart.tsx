@@ -1,6 +1,7 @@
 import { Container } from "react-bootstrap";
 import { useCart } from "../context/CartContext";
 import CartItemCard from "../components/CartItemCard";
+import Dish from "../types/Dish";
 
 const Cart = () => {
   const { cartState } = useCart();
@@ -13,7 +14,7 @@ const Cart = () => {
           <p className="fs-4">Add some items from the Menu first!</p>
         ) : (
           cartState.items.map((item, index: number) => (
-            <CartItemCard key={index} item={item} short={false} />
+            <CartItemCard key={index} item={item as Dish} short={false} />
           ))
         )}
       </Container>

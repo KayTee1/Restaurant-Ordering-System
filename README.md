@@ -28,7 +28,7 @@ The backend of the restaurant ordering system is built with Node.js and Express.
 
 # Demo
 
-[Restaurant Ordering App](https://restaurant-ordering-app-uvyl.onrender.com/){:target="_blank" rel="noopener noreferrer"}
+[Restaurant Ordering App](https://restaurant-ordering-app-uvyl.onrender.com/)
 
 # Screenshots
 

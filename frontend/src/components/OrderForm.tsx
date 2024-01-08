@@ -7,7 +7,6 @@ import OrderMessage from "./OrderMessage";
 import CartItemCard from "./CartItemCard";
 
 import Dish from "../types/Dish";
-import { baseApiUrl } from "../utilities/baseApiUrl";
 
 type FormData = {
   name: string;
@@ -67,7 +66,7 @@ const OrderForm: React.FC<{
             items,
           },
         };
-
+        const baseApiUrl = import.meta.env.VITE_API_URL;
         const orderUrl = "api/orders";
         const res = await axios.post(baseApiUrl + orderUrl, orderData);
         console.log(res);

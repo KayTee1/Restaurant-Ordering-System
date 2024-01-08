@@ -7,7 +7,6 @@ import { formatCurrency } from "../utilities/formatCurrency";
 import { useCart } from "../context/CartContext";
 
 import Dish from "../types/Dish";
-import { baseApiUrl } from "../utilities/baseApiUrl";
 
 type MenuItemCardProps = {
   dish: Dish;
@@ -25,6 +24,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({ dish }) => {
 
   const fetchImage = useCallback(async () => {
     try {
+      const baseApiUrl = import.meta.env.VITE_API_URL;
       const response = await axios.get(baseApiUrl + image, {
         responseType: "arraybuffer",
       });

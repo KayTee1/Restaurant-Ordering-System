@@ -2,10 +2,10 @@ import { Button, Container, Nav, Navbar as NavbarBs } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 
 import axios from "axios";
-import { baseApiUrl } from "../utilities/baseApiUrl";
 
 const handleResetOrders = async () => {
   try {
+    const baseApiUrl = import.meta.env.VITE_API_URL;
     const resetApiUrl = "api/orders";
     const res = await axios.delete(baseApiUrl + resetApiUrl);
     console.log(res);

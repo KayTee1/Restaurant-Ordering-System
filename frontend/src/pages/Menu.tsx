@@ -6,7 +6,6 @@ import PacmanLoader from "react-spinners/PacmanLoader";
 import MenuItemCard from "../components/MenuItemCard";
 
 import Dish from "../types/Dish";
-import { baseApiUrl } from "../utilities/baseApiUrl";
 
 const Menu: React.FC = () => {
   const [dishes, setDishes] = useState<Dish[]>([]);
@@ -15,7 +14,8 @@ const Menu: React.FC = () => {
 
   const fetchDishes = useCallback(async () => {
     try {
-      const dishesUrl = "api/dishes"
+      const baseApiUrl = import.meta.env.VITE_API_URL;
+      const dishesUrl = "api/dishes";
       const response = await axios.get<Dish[]>(baseApiUrl + dishesUrl);
       const data = response.data;
 

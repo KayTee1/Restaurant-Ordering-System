@@ -10,7 +10,12 @@ type VerticalModalProps = {
   show: boolean;
 };
 
-const VerticalModal: React.FC<VerticalModalProps> = ({ name, onHide, item, show }) => {
+const VerticalModal: React.FC<VerticalModalProps> = ({
+  name,
+  onHide,
+  item,
+  show,
+}) => {
   const { removeFromCart } = useCart();
 
   const handleConfirm = () => {

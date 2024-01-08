@@ -3,8 +3,8 @@ import axios from "axios";
 
 import { Container, Row, Col } from "react-bootstrap";
 import PacmanLoader from "react-spinners/PacmanLoader";
-import MenuItemCard from "../components/MenuItemCard";
 
+import MenuItemCard from "../components/MenuItemCard";
 import Dish from "../types/Dish";
 
 const Menu: React.FC = () => {
